@@ -1,123 +1,665 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-PT">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#0b1426">
-  <meta name="color-scheme" content="dark">
-  <title>Innovation Tour 27</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b1426">
+<meta name="color-scheme" content="dark">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Innovation Tour 27">
+<meta name="format-detection" content="telephone=no">
+<title>Innovation Tour 27</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+:root{--bg:#0b1426;--raised:#16294a;--glass:rgba(255,255,255,.05);--line:rgba(255,255,255,.11);--text:#eef2fa;--muted:#9db0d1;--accent:#f2b33d;--ink:#1b1403;--info:#74b9ff;--ok:#52d391;--danger:#ff7b7b;--f:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+*{box-sizing:border-box;margin:0}
+html{-webkit-text-size-adjust:100%;touch-action:manipulation}
+body{background:var(--bg);color:var(--text);font:400 1rem/1.5 var(--f);min-height:100dvh;padding-bottom:calc(6.4rem + env(safe-area-inset-bottom,0px));-webkit-tap-highlight-color:transparent}
+a{color:var(--accent)}button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--info);outline-offset:2px}
+[hidden]{display:none!important}
+.offline{background:var(--danger);color:#2a0a0a;text-align:center;font-size:.85rem;font-weight:600;padding:.4rem;padding-top:calc(.4rem + env(safe-area-inset-top,0px))}
+.header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:.75rem;padding:.7rem 1rem;padding-top:calc(.7rem + env(safe-area-inset-top,0px));background:rgba(11,20,38,.85);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:.65rem;min-width:0}
+.logo{flex:none;width:38px;height:38px;border-radius:12px;background:var(--accent);color:var(--ink);display:grid;place-items:center;font-weight:900}
+.brand h1{font-size:.95rem;font-weight:800;letter-spacing:.04em;text-transform:uppercase;line-height:1.15}
+.brand h1 span{color:var(--accent)}
+.brand p{font-size:.7rem;color:var(--muted)}
+.clock{flex:none;text-align:right;font-size:.7rem;color:var(--muted);line-height:1.35;font-variant-numeric:tabular-nums}
+.clock b{color:var(--text);font-size:.9rem}
+main{max-width:640px;margin:0 auto;padding:1rem}
+.page{display:none}.page.active{display:block}
+h2.t{font-size:clamp(1.7rem,7vw,2.3rem);font-weight:800;letter-spacing:-.02em;line-height:1.1;margin:.4rem 0 .25rem}
+.lead{color:var(--muted);margin-bottom:1rem}
 
+.hero{overflow:hidden;border-radius:24px;border:1px solid var(--line);background:linear-gradient(180deg,#25427a 0,#16294a 60%,#0e1d38 100%);padding:1.4rem 1.2rem 0;margin-bottom:.9rem}
+.hero .big{font-size:clamp(2.8rem,15vw,4.4rem);font-weight:900;line-height:1;letter-spacing:-.03em;color:var(--accent);font-variant-numeric:tabular-nums}
+.hero .sub{color:#cbd8ef;margin-top:.35rem}
+.sky{display:block;width:calc(100% + 2.4rem);margin:1.2rem -1.2rem 0}
+.sky g{fill:#0e1d38;transition:fill .3s}.sky g.past{fill:#2b4a80}.sky g.on{fill:var(--accent)}.sky .moon{fill:#ffe6a8;opacity:.85}
+.route{list-style:none;display:flex;padding:.2rem 1.2rem .9rem;margin:0 -1.2rem;background:#0e1d38}
+.route li{flex:1;text-align:center;font-size:.78rem;color:var(--muted)}
+.route li.on{color:var(--accent);font-weight:700}
+
+.card{background:var(--glass);border:1px solid var(--line);border-radius:20px;padding:1.1rem;margin-bottom:.75rem}
+.card h3{font-size:1.05rem;font-weight:700;line-height:1.3}
+.card p{margin-top:.25rem}
+.lbl{display:block;font-size:.78rem;font-weight:600;color:var(--muted);margin-bottom:.4rem}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-bottom:.75rem}.grid .card{margin:0}
+.muted,.note{color:var(--muted)}.note{font-size:.88rem}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:44px;padding:0 1.05rem;border-radius:14px;border:1px solid var(--line);background:var(--raised);font-weight:600;font-size:.9rem;text-decoration:none;color:var(--text);cursor:pointer}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.row{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.8rem}
+.chips{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.6rem;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;min-height:40px;padding:0 1rem;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font-weight:600;font-size:.85rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--text);border-color:var(--text);color:var(--bg)}
+
+.tag{display:inline-block;font-size:.72rem;font-weight:700;padding:.12rem .6rem;border-radius:999px;border:1px solid var(--line)}
+.tag.mandatory{background:var(--accent);border-color:var(--accent);color:var(--ink)}
+.tag.optional{color:var(--info);border-color:var(--info)}.tag.free{color:var(--ok);border-color:var(--ok)}
+.tag.urgent{color:var(--danger);border-color:var(--danger)}.tag.new{background:var(--info);border-color:var(--info);color:#06223d}
+
+.act{display:grid;grid-template-columns:3.9rem 1fr;gap:.2rem .75rem;padding:.8rem 0;border-top:1px solid var(--line)}
+.act .time{color:var(--muted);font-variant-numeric:tabular-nums;font-size:.9rem}
+.act h4{font-size:1rem;margin-top:.25rem}.act .meta{font-size:.88rem;color:var(--muted)}
+.stay{margin-top:.6rem;padding-top:.7rem;border-top:1px solid var(--line);font-size:.88rem;color:var(--muted)}
+.tag.travel{color:var(--muted)}
+.going{display:flex;align-items:center;gap:.5rem;min-height:44px;font-size:.9rem}
+.going input{width:22px;height:22px;accent-color:var(--accent)}
+.wx{display:flex;align-items:center;gap:.8rem}.wx .em{font-size:2.5rem;line-height:1}.wx b{font-size:1.6rem}
+
+.nav{position:fixed;z-index:30;left:50%;transform:translateX(-50%);bottom:calc(.7rem + env(safe-area-inset-bottom,0px));width:min(94vw,520px);display:flex;gap:2px;padding:.35rem;border-radius:26px;background:rgba(22,41,74,.92);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border:1px solid var(--line)}
+.nb{position:relative;flex:1;min-height:54px;border:0;background:none;color:var(--muted);border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:.68rem;font-weight:600;cursor:pointer}
+.nb svg{width:22px;height:22px;pointer-events:none}
+.nb.active{background:var(--accent);color:var(--ink)}
+.badge{position:absolute;top:3px;left:calc(50% + 6px);min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--danger);color:#2a0a0a;font-size:.68rem;font-weight:800;display:grid;place-items:center}
+footer{text-align:center;padding:1.2rem;color:var(--muted);font-size:.78rem}
+footer b{display:block;color:var(--text);letter-spacing:.08em;text-transform:uppercase}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(6.4rem + env(safe-area-inset-bottom,0px));z-index:40;background:var(--text);color:var(--bg);padding:.6rem 1rem;border-radius:12px;font-weight:600;font-size:.9rem}
+@media(max-width:360px){.grid{grid-template-columns:1fr}.clock{display:none}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+/* ===== Camada de design v3 ===== */
+body{background-image:radial-gradient(70% 38% at 12% -4%,rgba(242,179,61,.10),transparent 60%)}
+h2.t::after{content:"";display:block;width:38px;height:4px;border-radius:2px;background:var(--accent);margin-top:.55rem}
+.sky g{animation:rise .8s cubic-bezier(.2,.7,.2,1) both}
+.sky g.stars{fill:#fff;opacity:.55;animation:none}
+#sky-phl{animation-delay:.12s}#sky-dc{animation-delay:.24s}
+@keyframes rise{from{transform:translateY(22px);opacity:0}}
+.hero .range{display:inline-block;margin-top:.9rem;padding:.3rem .8rem;border-radius:999px;background:rgba(255,255,255,.1);color:#e3ecfb;font-size:.82rem;font-weight:600}
+.bar{height:6px;border-radius:3px;background:rgba(255,255,255,.15);margin-top:.9rem;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--accent)}
+.dt{flex:none;width:54px;height:58px;border-radius:16px;background:var(--raised);border:1px solid var(--line);display:grid;place-content:center;text-align:center;line-height:1.05}
+.dt b{font-size:1.4rem;font-weight:800}.dt span{font-size:.7rem;font-weight:700;color:var(--accent)}
+.dt.today{background:var(--accent);border-color:var(--accent);color:var(--ink)}.dt.today span{color:var(--ink)}
+.act{border-top:0;margin-top:.55rem;padding:.8rem .9rem;background:rgba(255,255,255,.035);border-left:3px solid var(--c,var(--line));border-radius:4px 14px 14px 4px;grid-template-columns:3.6rem 1fr}
+.act .time{color:var(--text);font-weight:700}
+.t-mandatory{--c:var(--accent)}.t-optional{--c:var(--info)}.t-free{--c:var(--ok)}.t-travel{--c:#6f84a8}
+.picks{margin:.5rem 0 0 1.1rem;color:var(--muted);font-size:.9rem}
+.inp{width:100%;min-height:46px;margin-top:.8rem;padding:0 .9rem;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.06);color:var(--text);font:inherit}
+.inp::placeholder{color:var(--muted)}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+@media(prefers-reduced-motion:reduce){.sky g{animation:none}}
+/* ===== v4: mais suave, Info fluida, luzes na cidade ===== */
+.card{background:rgba(255,255,255,.035);border:0;box-shadow:none;border-radius:24px;padding:1.2rem}
+.mine{border:0;background:rgba(242,179,61,.07)}
+.btn{border:0;background:rgba(255,255,255,.09)}
+.btn.primary{background:var(--accent)}
+.chip{border:0;background:rgba(255,255,255,.06)}
+.chip[aria-pressed="true"]{background:var(--text);color:var(--bg)}
+.chips{position:relative}
+.tag{border:0;background:rgba(255,255,255,.08)}
+.tag.mandatory{background:var(--accent)}
+.tag.optional{background:rgba(116,185,255,.15)}
+.tag.free{background:rgba(82,211,145,.15)}
+.tag.urgent{background:rgba(255,123,123,.15)}
+.tag.new{background:var(--info)}
+.act{background:none;border-radius:0;padding:.7rem 0 .7rem .95rem}
+.inp{border:0;border-bottom:1.5px solid var(--line);border-radius:0;background:transparent;padding:0;min-height:44px}
+.inp:focus{outline:0;border-bottom-color:var(--accent)}
+.dt{border:0;background:rgba(255,255,255,.07)}
+
+.page.active{animation:fadeUp .35s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}}
+.irow{display:grid;grid-template-columns:5.6rem 1fr;gap:.15rem .8rem;padding:.8rem 0 .8rem .95rem;margin-top:.55rem;border-left:2px solid var(--c,var(--accent))}
+.irow .k{font-weight:700;font-size:.9rem}
+.irow h4{font-size:1rem}
+.irow p{color:var(--muted);font-size:.92rem;margin-top:.15rem}
+.irow .btn{margin-top:.5rem}
+.qa{border-bottom:1px solid var(--line)}
+.q{display:flex;width:100%;justify-content:space-between;align-items:center;gap:1rem;text-align:left;background:none;border:0;padding:1rem 0;font-weight:600;color:var(--text);cursor:pointer}
+.q i{flex:none;width:9px;height:9px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg);transition:transform .3s}
+.qa.open .q i{transform:rotate(-135deg)}
+.a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
+.qa.open .a{grid-template-rows:1fr}
+.a>div{overflow:hidden}
+.a p{margin:0;padding-bottom:1rem;color:var(--muted)}
+
+.sky g.on{fill:#1d3560;filter:drop-shadow(0 0 8px rgba(242,179,61,.3))}
+.sky g.win{animation:none;filter:none}
+.win rect{fill:#ffd98a;opacity:0;transition:opacity .6s ease var(--d,0s)}
+.win.lit rect{opacity:.92}
+.win.lit rect.f{animation:tw 3.6s ease-in-out 1.6s infinite}
+@keyframes tw{0%,100%{opacity:.92}50%{opacity:.35}}
+@media(prefers-reduced-motion:reduce){.page.active{animation:none}.win rect{transition:none}.win.lit rect.f{animation:none}.a,.q i{transition:none}}
+/* ===== v5: sem caixas — secções abertas e suaves ===== */
+.card{background:none;border:0;border-radius:0;box-shadow:none;padding:1.05rem 0;margin:0;border-bottom:1px solid rgba(255,255,255,.07)}
+.card:last-child{border-bottom:0}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:0;border-bottom:1px solid rgba(255,255,255,.07)}
+.grid .card{border-bottom:0;padding:1.05rem 0}
+.grid .card+.card{padding-left:1.1rem;border-left:1px solid rgba(255,255,255,.07)}
+.grid h3{font-size:1.25rem;font-weight:800;letter-spacing:-.01em}
+.lbl{font-weight:600;margin-bottom:.3rem}
+.mine{background:none;border-left:2px solid var(--accent);padding-left:1rem}
+@media(max-width:360px){.grid{grid-template-columns:1fr}.grid .card+.card{padding-left:0;border-left:0;border-top:1px solid rgba(255,255,255,.07)}}
+/* ===== v6: acordeão suave (Programa e Info) ===== */
+.acc{border-bottom:1px solid rgba(255,255,255,.07)}
+.acc:last-child{border-bottom:0}
+.ah{display:flex;align-items:center;gap:.85rem;width:100%;min-height:44px;padding:1.05rem 0;text-align:left;background:none;border:0;color:var(--text);cursor:pointer}
+.ah::after{content:"";flex:none;margin-left:auto;width:9px;height:9px;border-right:2px solid var(--accent);border-bottom:2px solid var(--accent);transform:rotate(45deg);transition:transform .4s cubic-bezier(.2,.7,.2,1)}
+.acc.open>.ah::after{transform:rotate(-135deg)}
+.ht{display:block;font-size:1.05rem;font-weight:700;line-height:1.3}
+.hs{display:block;font-size:.88rem;color:var(--muted)}
+.accb{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.7,.2,1)}
+.acc.open>.accb{grid-template-rows:1fr}
+.accb>div{min-height:0;overflow:hidden;visibility:hidden;transition:visibility 0s .45s}
+.acc.open>.accb>div{visibility:visible;transition-delay:0s}
+.accb-in{padding-bottom:1rem;opacity:0;transform:translateY(-8px);transition:opacity .35s ease,transform .45s cubic-bezier(.2,.7,.2,1)}
+.acc.open .accb-in{opacity:1;transform:none;transition-delay:.1s}
+@media(prefers-reduced-motion:reduce){.accb,.accb-in,.ah::after{transition:none}}
+/* ===== v10: botão do Google Maps ===== */
+.btn.big{width:100%;min-height:58px;font-size:1.05rem;border-radius:18px}
+</style>
+</head>
 <body>
 
-  <div id="offline" class="offline" hidden>Sem ligação. A mostrar a última informação guardada.</div>
+<div id="offline" class="offline" hidden>Sem ligação. A mostrar a última informação guardada.</div>
 
-  <header class="header">
-    <div class="brand">
-      <span class="brand-icon">IT</span>
-      <div>
-        <h1>Innovation Tour <span>27</span></h1>
-        <p>Nova Iorque · Filadélfia · Washington</p>
-      </div>
+<header class="header">
+  <div class="brand"><span class="logo">IT</span>
+    <div><h1>Innovation Tour <span>27</span></h1><p>Nova Iorque · Filadélfia · Washington</p></div></div>
+  <div class="clock" id="clock"></div>
+</header>
+
+<main>
+  <section class="page active" id="hoje">
+    <div class="hero">
+      <div id="hero"></div>
+      <svg class="sky" viewBox="0 0 360 120" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <g class="stars"><circle cx="30" cy="16" r="1.2"/><circle cx="70" cy="30" r="1"/><circle cx="120" cy="12" r="1.3"/><circle cx="150" cy="32" r="1"/><circle cx="182" cy="14" r="1.2"/><circle cx="256" cy="16" r="1.2"/><circle cx="292" cy="28" r="1"/><circle cx="334" cy="12" r="1.3"/><circle cx="100" cy="46" r="1"/><circle cx="318" cy="50" r="1"/></g>
+        <circle class="moon" cx="214" cy="30" r="9"/>
+        <g id="sky-ny"><rect x="10" y="74" width="18" height="46"/><rect x="30" y="54" width="20" height="66"/><path d="M54 120V48l8-14V20l2-8 2 8v14l8 14v72z"/><rect x="76" y="66" width="18" height="54"/><rect x="96" y="82" width="16" height="38"/></g>
+        <g id="sky-phl"><rect x="132" y="88" width="8" height="32"/><rect x="142" y="86" width="64" height="34"/><rect x="164" y="58" width="20" height="28"/><path d="M162 58l12-20 12 20z"/><rect x="172" y="30" width="4" height="10"/><rect x="208" y="78" width="14" height="42"/></g>
+        <g id="sky-dc"><path d="M244 120l2-74 6-24 6 24 2 74z"/><rect x="278" y="98" width="72" height="22"/><rect x="284" y="88" width="60" height="10"/><rect x="298" y="74" width="32" height="14"/><path d="M298 74q16-30 32 0z"/><rect x="312" y="50" width="4" height="10"/></g>
+      </svg>
+      <ol class="route" id="route"></ol>
     </div>
-    <div class="clock" id="clock" aria-label="Horas"></div>
-  </header>
+    <div class="grid">
+      <div class="card"><span class="lbl">Cidade</span><h3 id="now-city">A definir</h3></div>
+      <div class="card"><span class="lbl">Próxima atividade</span><div id="now-next"><h3>A definir</h3></div></div>
+    </div>
+    <div class="card"><span class="lbl">Ponto de encontro</span><div id="now-meet"><h3>A definir</h3></div></div>
+    <div class="card" id="myday-card" hidden><span class="lbl">O meu dia</span><div id="myday"></div></div>
+    <div class="card"><span class="lbl">Onde estou</span><div id="loc"></div></div>
+    <div class="card"><span class="lbl">Tempo agora</span><div id="weather"><p class="muted">A carregar…</p></div></div>
+    <div id="now-notices"></div>
+  </section>
 
-  <main>
+  <section class="page" id="programa">
+    <h2 class="t">Programa</h2><p class="lead">O que te espera em cada cidade.</p>
+    <div id="mine"></div>
+    <div class="chips" id="prog-filters"></div>
+    <div id="prog-list"></div>
+  </section>
 
-    <!-- HOJE -->
-    <section class="page active" id="hoje" aria-label="Hoje">
-      <div class="card hero">
-        <h2>Hoje</h2>
-        <div id="hero"></div>
-        <ol class="route" id="route" aria-label="Cidades da viagem"></ol>
-      </div>
+  <section class="page" id="mapas">
+    <h2 class="t">Mapas</h2><p class="lead">Abre o Google Maps para ver onde estás e encontrar o caminho.</p>
+    <div id="maps-go"></div>
+  </section>
 
-      <div class="info-grid">
-        <div class="card">
-          <span class="card-label">Cidade</span>
-          <h3 id="now-city">A definir</h3>
-        </div>
-        <div class="card">
-          <span class="card-label">Próxima atividade</span>
-          <div id="now-next"><h3>A definir</h3></div>
-        </div>
-      </div>
+  <section class="page" id="informacoes">
+    <h2 class="t">Informações</h2><p class="lead">Tudo o que precisas de saber.</p>
+    <div id="info-list"></div>
+  </section>
 
-      <div class="card">
-        <span class="card-label">Ponto de encontro</span>
-        <div id="now-meet"><h3>A definir</h3></div>
-      </div>
+  <section class="page" id="avisos">
+    <h2 class="t">Avisos</h2><p class="lead">Novidades e alterações do programa.</p>
+    <div id="notice-list"></div>
+  </section>
+</main>
 
-      <div class="card">
-        <span class="card-label">Onde estou</span>
-        <div id="loc"></div>
-      </div>
+<footer><b>Innovation Tour 27</b>Explore the world. Create memories.</footer>
 
-      <div class="card">
-        <span class="card-label">Tempo agora</span>
-        <div id="weather"><p class="muted">A carregar…</p></div>
-      </div>
+<nav class="nav" aria-label="Secções">
+  <button type="button" class="nb active" data-page="hoje"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/></svg>Hoje</button>
+  <button type="button" class="nb" data-page="programa"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>Programa</button>
+  <button type="button" class="nb" data-page="mapas"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Mapas</button>
+  <button type="button" class="nb" data-page="informacoes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>Info</button>
+  <button type="button" class="nb" data-page="avisos"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16v-5a6 6 0 0 1 12 0v5l2 2H4zM10 21h4"/></svg>Avisos<span class="badge" id="nav-badge" hidden></span></button>
+</nav>
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 
-      <div id="now-notices"></div>
-    </section>
+<script>
+'use strict';
+/* ===== DADOS DA VIAGEM — edita só esta secção ===== */
+// type: 'mandatory' | 'optional' | 'free' | 'travel'
+// period (se não houver hora): 'manha' | 'tarde' | 'fimtarde' | 'noite'
+// id: obrigatório nas atividades 'optional' e NUNCA deve mudar (guarda as escolhas de cada pessoa, mesmo que o título ou a hora mudem)
+// Ponto de encontro: usa meetAt: 'Lobby do hotel', meetTime: '08:15', meetLat/meetLon (para o "Como chegar").
+// Sem meetAt, usa-se o 'place' da atividade.
+const TRIP = {
+  start: '2027-03-19',
+  end: '2027-03-26',
+  programNote: 'Este programa ainda poderá sofrer alterações de dias, horários e organização de algumas atividades, em função da disponibilidade das instituições que vamos visitar e de questões logísticas.',
+  // Recolha das escolhas opcionais (preenche o que quiseres usar):
+  organizer: { whatsapp: '', email: '' }, // whatsapp com indicativo, só dígitos, ex.: '351912345678'
+  submitUrl: '', // endereço do Google Apps Script que grava numa folha (ver instruções)
+  cities: [
+    { id: 'ny',  name: 'Nova Iorque', lat: 40.7128, lon: -74.0060, hotel: null },
+    { id: 'phl', name: 'Filadélfia',  lat: 39.9526, lon: -75.1652, hotel: null },
+    { id: 'dc',  name: 'Washington',  lat: 38.9072, lon: -77.0369, hotel: null }
+    // hotel: { name: 'Hotel X', address: 'Rua, nº', lat: 40.75, lon: -73.99 }
+  ],
+  days: [
+    { date: '2027-03-19', city: 'ny', title: 'Porto – Nova Iorque', stay: 'Alojamento em Newark/Nova Iorque.', items: [
+      { title: 'Partida do Porto', type: 'travel', note: 'Em diferentes horários.' },
+      { title: 'Chegada a Nova Iorque', type: 'travel', note: 'Em diferentes horários.' }
+    ] },
+    { date: '2027-03-20', city: 'ny', title: 'Nova Iorque', stay: 'Alojamento em Newark/Nova Iorque.', items: [
+      { time: '10:00', title: 'Workshop sobre documentarismo em vídeo no Paley Center for the Media', type: 'mandatory', place: 'Paley Center for the Media, New York' },
+      { time: '14:30', title: 'Visita ao Museu de Cera Madame Tussauds e conversa com o diretor, Tiago Mogadouro, sobre estratégias de comunicação na área da cultura', type: 'mandatory', place: 'Madame Tussauds, New York' },
+      { period: 'fimtarde', title: 'Resto da tarde livre', type: 'free' },
+      { id: 'jazz-20', period: 'noite', title: 'Noite de jazz', type: 'optional', note: 'Ou noite livre.' }
+    ] },
+    { date: '2027-03-21', city: 'phl', title: 'Filadélfia', stay: 'Alojamento em Washington D.C.', items: [
+      { time: '09:00', title: 'Partida para Filadélfia', type: 'travel' },
+      { id: 'revolucao-21', period: 'manha', title: 'Visita guiada aos locais da Revolução Americana', type: 'optional', note: 'Gratuito.' },
+      { id: 'cheesesteaks-21', time: '13:00', title: 'Almoço para experimentar os famosos Philly cheesesteaks', type: 'optional', note: 'Preços variados.' },
+      { time: '16:00', title: 'Visita guiada ao Museu da Constituição (National Constitution Center)', type: 'mandatory', place: 'National Constitution Center, Philadelphia' },
+      { time: '19:00', title: 'Partida para Washington D.C.', type: 'travel' }
+    ] },
+    { date: '2027-03-22', city: 'dc', title: 'Washington D.C.', stay: 'Alojamento em Washington D.C.', items: [
+      { time: '08:30', title: 'Visita ao Capitólio', type: 'mandatory', place: 'United States Capitol, Washington DC' },
+      { id: 'ar-espaco-22', time: '12:00', title: 'Visita ao Museu do Ar e do Espaço', type: 'optional', place: 'National Air and Space Museum, Washington DC', note: 'Gratuito.' },
+      { time: '14:30', title: 'Visita aos estúdios da Eurovisão e à delegação da RTP em Washington', type: 'mandatory' },
+      { id: 'tour-dc-22', time: '16:30', title: 'Tour pela cidade, incluindo a Casa Branca, o Washington Monument e o Thomas Jefferson Memorial', type: 'optional', note: 'Gratuito.' },
+      { id: 'watergate-22', period: 'noite', title: 'Visita ao edifício Watergate e jantar em Georgetown', type: 'optional', note: 'Preços variados.' }
+    ] },
+    { date: '2027-03-23', city: 'ny', title: 'Washington – Nova Iorque', stay: 'Alojamento em Newark/Nova Iorque.', note: 'À noite, os participantes podem escolher entre as opções abaixo.', items: [
+      { time: '07:00', title: 'Partida para Nova Iorque', type: 'travel', note: 'Chegada prevista para o final da manhã.' },
+      { time: '14:00', title: 'Palestra sobre inovação na comunicação na Universidade de Columbia', type: 'mandatory', place: 'Columbia University, New York', note: 'Das 14h00 às 15h00.' },
+      { id: 'nbc-23', period: 'tarde', title: 'Visitas aos estúdios da NBC, organizadas por grupos, de acordo com a disponibilidade', type: 'optional', place: 'NBC Studios, New York', note: 'Cerca de 40 €.' },
+      { period: 'fimtarde', title: 'Resto da tarde livre', type: 'free' },
+      { id: 'nets-celtics-23', time: '19:30', title: 'Basquetebol: Brooklyn Nets × Boston Celtics', type: 'optional', place: 'Barclays Center, Brooklyn', note: 'Preços variados.' },
+      { id: 'knicks-pelicans-23', time: '19:30', title: 'Basquetebol: New York Knicks × New Orleans Pelicans', type: 'optional', place: 'Madison Square Garden, New York', note: 'Preços variados.' },
+      { id: 'broadway-23', period: 'noite', title: 'Peça na Broadway', type: 'optional', note: 'Preços variados.' },
+      { id: 'fallon-23', period: 'noite', title: 'The Tonight Show Starring Jimmy Fallon', type: 'optional', note: 'Gratuito, mediante sorteio de bilhetes.' },
+      { period: 'noite', title: 'Noite livre', type: 'free' }
+    ] },
+    { date: '2027-03-24', city: 'ny', title: 'Nova Iorque', stay: 'Alojamento em Newark/Nova Iorque.', items: [
+      { id: 'nbc-24', period: 'manha', title: 'Visitas aos estúdios da NBC, organizadas por grupos', type: 'optional', place: 'NBC Studios, New York', note: 'Cerca de 40 €.' },
+      { time: '14:00', title: 'Visita ao edifício das Nações Unidas', type: 'mandatory', place: 'United Nations Headquarters, New York' },
+      { time: '15:30', title: 'Visita à estação de Rádio da ONU', type: 'mandatory' },
+      { period: 'fimtarde', title: 'Resto da tarde livre', type: 'free' },
+      { id: 'knicks-rockets-24', time: '19:30', title: 'Basquetebol: New York Knicks × Houston Rockets', type: 'optional', place: 'Madison Square Garden, New York' },
+      { id: 'jantar-grupo-24', time: '22:30', title: 'Jantar de grupo, no final do jogo', type: 'optional', note: 'Cerca de 40 €.' }
+    ] },
+    { date: '2027-03-25', city: 'ny', title: 'Nova Iorque – Porto', items: [
+      { time: '09:00', title: 'Palestra sobre Digital Storytelling no jornal The New York Times', type: 'mandatory', place: 'The New York Times, New York' },
+      { id: 'nbc-25', period: 'manha', title: 'Possibilidade de visitas aos estúdios da NBC, organizadas por grupos', type: 'optional', place: 'NBC Studios, New York', note: 'Cerca de 40 €.' },
+      { time: '12:00', title: 'Conversa/piquenique em Central Park com o youtuber brasileiro Dicas de Nova Iorque e com o correspondente da SIC/Lusa em Nova Iorque', type: 'mandatory', place: 'Central Park, New York' },
+      { period: 'tarde', title: 'Tempo livre', type: 'free' },
+      { period: 'fimtarde', title: 'Partida para o Porto', type: 'travel', note: 'Final da tarde e noite.' }
+    ] },
+    { date: '2027-03-26', city: null, title: 'Chegada ao Porto', items: [
+      { period: 'manha', title: 'Chegada ao Aeroporto Francisco Sá Carneiro', type: 'travel', place: 'Aeroporto Francisco Sá Carneiro, Porto', note: 'Durante a manhã ou início da tarde, dependendo dos voos.' }
+    ] }
+  ],
+  notices: [ // type: 'info' | 'important' | 'urgent'
+    { id: 'jogos-nba', type: 'info', title: 'Jogos da NBA em Nova Iorque', text: 'Opções a considerar: terça, 23 de março, Brooklyn Nets × Boston Celtics (19h30, Barclays Center, Brooklyn) ou New York Knicks × New Orleans Pelicans (19h30, Madison Square Garden); quarta, 24 de março, New York Knicks × Houston Rockets (19h30, Madison Square Garden). Estas opções devem ser confirmadas antes de comprar bilhetes.' },
+    { id: 'seguro-viagem', type: 'info', title: 'Seguro de viagem muito aconselhável', text: 'O sistema de saúde nos Estados Unidos é extremamente caro. Verifica as condições do teu seguro ou cartão de crédito, em especial os limites de cobertura para despesas médicas nos EUA.' },
+    { id: 'bagagem', type: 'info', title: 'Bagagem em porão', text: 'O preço inclui apenas bagagem de cabina. Se quiseres mala em porão, avisa o organizador antecipadamente para a acrescentar à reserva. Pagar no check-in costuma ficar mais caro.' }
+  ],
+  info: [
+    { id: 'voos', icon: '✈️', title: 'Voos', sub: 'Ida a 19 de março, regresso a 26.', rows: [
+      { k: 'Ida', t: '19 de março', n: 'Partida do Porto, em diferentes horários. Chegada a Nova Iorque nesse dia.' },
+      { k: 'Volta', t: '25 → 26 de março', n: 'Partida de Nova Iorque no final da tarde/noite. Chegada ao Aeroporto Francisco Sá Carneiro de manhã ou início da tarde, consoante os voos.' },
+      { k: 'Bagagem', t: 'Só de cabina', n: 'Para levar mala em porão, avisa o organizador antecipadamente.' }
+    ] },
+    { id: 'transportes', icon: '🚌', title: 'Transportes', sub: 'Deslocações em grupo.', rows: [
+      { k: '21 mar', t: 'Nova Iorque → Filadélfia', n: 'Partida às 09h00.' },
+      { k: '21 mar', t: 'Filadélfia → Washington D.C.', n: 'Partida às 19h00.' },
+      { k: '23 mar', t: 'Washington D.C. → Nova Iorque', n: 'Partida às 07h00, com chegada prevista para o final da manhã.' }
+    ] },
+    { id: 'alojamento', icon: '🏨', title: 'Alojamento', sub: 'As moradas serão indicadas quando os hotéis estiverem escolhidos.', rows: [
+      { k: 'Onde', t: 'Newark/Nova Iorque e Washington D.C.' },
+      { k: 'Quartos', t: 'Partilhados por quatro pessoas', n: 'Quarto individual ou de duas pessoas: avisa o organizador (o preço muda).' },
+      { k: 'Pequeno-almoço', t: 'A confirmar', n: 'O organizador está a tentar que todos os hotéis o incluam.' }
+    ] }
+  ],
+  contacts: [
+    { name: 'Emergência (EUA)', phone: '911', role: 'Polícia, bombeiros e ambulância' }
+    // { name: 'Organização', phone: '+351 000 000 000', role: 'Coordenação da viagem' }
+  ],
+  faq: [
+    { q: 'O alojamento é individual?', a: 'Não. O orçamento apresentado prevê quartos partilhados por quatro pessoas. Tenho o cuidado de garantir que os quartos são suficientemente espaçosos para acomodar confortavelmente os quatro participantes.' },
+    { q: 'Os hotéis incluem pequeno-almoço?', a: 'Estou a tentar que todos os hotéis incluam o pequeno-almoço. Confirmarei esta informação quando os alojamentos estiverem definitivamente escolhidos.' },
+    { q: 'Posso levar alguém que não seja aluno de Comunicação?', a: 'Sim, não há qualquer problema. No entanto, gostaria de falar pessoalmente com as pessoas externas à Universidade que pretendam participar, para assegurar que estão sintonizadas com o espírito e os objetivos da viagem.' },
+    { q: 'Gostaria de ficar num quarto individual ou de duas pessoas. É possível?', a: 'Sim, basta que me avisem. Naturalmente, o preço da viagem será diferente, devido ao custo adicional do alojamento.' },
+    { q: 'Posso alterar a data de ida ou de regresso?', a: 'Sim, basta que me avisem. Como o regresso está previsto para uma quinta-feira, é tentador aproveitar para ficar até ao fim de semana! A alteração das datas poderá implicar uma alteração do preço da viagem. Se quiserem prolongar a estadia, também posso ajudar a encontrar alojamento para os dias adicionais. Em alternativa, podem tratar diretamente dessa reserva.' },
+    { q: 'Como podemos tratar dos bilhetes para um jogo da NBA ou para uma peça da Broadway?', a: 'Podem comprar os bilhetes individualmente ou pedir-me ajuda. Em anos anteriores, tenho procurado ajudar a organizar a compra dos bilhetes para os jogos de basquetebol, até para garantir que os participantes possam ficar na mesma secção do pavilhão. Na Broadway existem espetáculos para diferentes gostos e orçamentos, pelo que cada um poderá escolher o que mais lhe interessa. Os jogos a considerar estão em Avisos e devem ser confirmados antes da compra.' },
+    { q: 'É aconselhável contratar um seguro de viagem?', a: 'Sim, muito aconselhável! O sistema de saúde nos Estados Unidos é extremamente caro. Se precisarem de uma consulta médica ou de uma hospitalização (espero bem que não...), é importante terem um seguro que evite surpresas financeiras desagradáveis. Existem muitos seguros de viagem e de assistência médica que podem ser contratados online, e alguns cartões de crédito também incluem seguros de viagem. Aconselho-vos a verificar as condições, especialmente os limites de cobertura para despesas médicas nos Estados Unidos.' },
+    { q: 'O preço da viagem inclui transporte de mala em porão?', a: 'Não. O preço inclui apenas bagagem de cabina, de acordo com as condições da companhia aérea. Se quiserem levar uma mala em porão, devem avisar-me antecipadamente para que possa acrescentar essa opção à reserva. Em alternativa, poderão pagar diretamente à companhia aérea no momento do check-in, embora normalmente seja mais económico tratar disso com antecedência.' },
+    { q: 'E se me perder do grupo?', a: 'Em "Hoje" ou em "Mapas", toca em "Abrir no Maps" ou "Abrir o Google Maps" para ver onde estás e encontrar o caminho. Em "Hoje", quando houver um ponto de encontro, toca também em "Como chegar".' },
+    { q: 'Quem vê a minha localização?', a: 'Ninguém. Esta página não pede nem guarda a tua posição. Quem a usa é o Google Maps, no teu telemóvel.' }
+  ]
+};
 
-    <!-- PROGRAMA -->
-    <section class="page" id="programa" aria-label="Programa">
-      <div class="section-heading">
-        <h2>Programa</h2>
-        <p>Descobre o que te espera em cada cidade.</p>
-      </div>
-      <div class="chips" id="prog-filters" role="group" aria-label="Filtrar atividades"></div>
-      <div id="prog-list"></div>
-    </section>
+/* ===== Utilitários ===== */
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const store = {
+  get(k, d) { try { return JSON.parse(localStorage.getItem('it27:' + k)) ?? d; } catch (e) { return d; } },
+  set(k, v) { try { localStorage.setItem('it27:' + k, JSON.stringify(v)); } catch (e) {} }
+};
+const TZ = 'America/New_York';
+const state = { w: store.get('w', null), filter: store.get('filter', 'all') };
+const hhmm = (tz, d = new Date()) => new Intl.DateTimeFormat('pt-PT', { timeZone: tz, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(d);
+const todayISO = () => new Intl.DateTimeFormat('en-CA', { timeZone: TZ }).format(new Date());
+const daysBetween = (a, b) => Math.round((Date.parse(b) - Date.parse(a)) / 864e5);
+const fmtDate = d => new Date(d + 'T12:00:00').toLocaleDateString('pt-PT', { weekday: 'long', day: 'numeric', month: 'long' });
+const toast = m => { const t = $('#toast'); t.textContent = m; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => (t.hidden = true), 2200); };
+function dist(a, b, c, d) {
+  const r = x => x * Math.PI / 180, h = Math.sin(r(c - a) / 2) ** 2 + Math.cos(r(a)) * Math.cos(r(c)) * Math.sin(r(d - b) / 2) ** 2;
+  return 12742 * Math.asin(Math.sqrt(h));
+}
+const pin = (lat, lon) => `https://www.google.com/maps/search/?api=1&query=${lat},${lon}`;
+const txt = q => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+const dir = it => `https://www.google.com/maps/dir/?api=1&destination=${it.lat != null ? it.lat + ',' + it.lon : encodeURIComponent(it.place || '')}`;
 
-    <!-- MAPAS -->
-    <section class="page" id="mapas" aria-label="Mapas">
-      <div class="section-heading">
-        <h2>Mapas</h2>
-        <p>Encontra os locais importantes da viagem.</p>
-      </div>
-      <div class="card" id="maps-near"></div>
-      <div id="maps-list"></div>
-    </section>
+const PERIOD = { manha: ['Manhã', '10:00'], tarde: ['Tarde', '15:00'], fimtarde: ['Tarde', '17:00'], noite: ['Noite', '20:00'] };
+const tm = i => i.time || (PERIOD[i.period] || [])[1] || '12:00';
+const tlabel = i => i.time || (PERIOD[i.period] || [''])[0];
+const flat = () => TRIP.days.flatMap(d => (d.items || []).map(i => ({ ...i, date: d.date, city: d.city })))
+  .sort((a, b) => (a.date + tm(a)).localeCompare(b.date + tm(b)));
+const upcoming = fn => { const k = `${todayISO()} ${hhmm(TZ)}`; return flat().find(i => `${i.date} ${tm(i)}` >= k && (!fn || fn(i))); };
+function tripStatus() {
+  if (!TRIP.start) return { k: 'tbd' };
+  const t = todayISO(), d = daysBetween(t, TRIP.start);
+  if (d > 0) return { k: 'before', n: d };
+  if (TRIP.end && daysBetween(TRIP.end, t) > 0) return { k: 'after' };
+  return { k: 'during', n: 1 - d, total: TRIP.end ? daysBetween(TRIP.start, TRIP.end) + 1 : null };
+}
+function currentCity() {
+  const day = TRIP.days.find(d => d.date === todayISO());
+  return day ? TRIP.cities.find(c => c.id === day.city) : null;
+}
 
-    <!-- INFORMAÇÕES -->
-    <section class="page" id="informacoes" aria-label="Informações">
-      <div class="section-heading">
-        <h2>Informações</h2>
-        <p>Tudo o que precisas de saber.</p>
-      </div>
-      <div id="info-list"></div>
-    </section>
+/* ===== Navegação ===== */
+const PAGES = ['hoje', 'programa', 'mapas', 'informacoes', 'avisos'];
+function show(id, push) {
+  if (!PAGES.includes(id)) id = 'hoje';
+  $$('.page').forEach(p => p.classList.toggle('active', p.id === id));
+  $$('.nb').forEach(b => b.classList.toggle('active', b.dataset.page === id));
+  if (push !== false && location.hash !== '#' + id) { try { history.replaceState(null, '', '#' + id); } catch (e) {} }
+  window.scrollTo(0, 0);
+  if (id === 'avisos') markRead();
+}
 
-    <!-- AVISOS -->
-    <section class="page" id="avisos" aria-label="Avisos">
-      <div class="section-heading">
-        <h2>Avisos</h2>
-        <p>Acompanha as novidades da viagem.</p>
-      </div>
-      <div id="notice-list"></div>
-    </section>
+/* ===== Hoje ===== */
+function renderHero() {
+  const s = tripStatus(), big = (n, sub) => `<div class="big">${n}</div><p class="sub">${sub}</p>`;
+  const sd = x => new Date(x + 'T12:00:00').toLocaleDateString('pt-PT', { day: 'numeric', month: 'short' }).replace('.', '');
+  const range = TRIP.start && TRIP.end ? `<span class="range">${sd(TRIP.start)} – ${sd(TRIP.end)} · ${daysBetween(TRIP.start, TRIP.end) + 1} dias</span>` : '';
+  const bar = s.k === 'during' && s.total ? `<div class="bar"><i style="width:${Math.min(100, s.n / s.total * 100)}%"></i></div>` : '';
+  $('#hero').innerHTML =
+    (s.k === 'before' ? big(s.n, s.n === 1 ? 'dia para a partida' : 'dias para a partida') :
+    s.k === 'during' ? big('Dia ' + s.n, (s.total ? `de ${s.total} · ` : '') + fmtDate(todayISO())) :
+    s.k === 'after' ? big('Até já!', 'A viagem terminou. Obrigado por viajares connosco.') :
+    big('Em breve', 'A data de partida será anunciada.')) + bar + range;
+  const cur = currentCity(), idx = cur ? TRIP.cities.indexOf(cur) : (s.k === 'after' ? 99 : -1);
+  TRIP.cities.forEach((c, i) => { const g = $('#sky-' + c.id); if (!g) return; g.setAttribute('class', i < idx ? 'past' : i === idx ? 'on' : ''); const w = g.querySelector('.win'); if (w) w.setAttribute('class', 'win' + (i === idx ? ' lit' : '')); });
+  $('#route').innerHTML = TRIP.cities.map((c, i) => `<li class="${i === idx ? 'on' : ''}">${esc(c.name)}</li>`).join('');
+  $('#now-city').textContent = cur ? cur.name : 'A definir';
+}
+const goingMap = () => store.get('going', {});
+const inMyPlan = i => i.type !== 'free' && (i.type !== 'optional' || !!goingMap()[itemKey(i, i)]);
+// Ponto de encontro: meetAt (se existir) ou, em alternativa, o local da própria atividade
+const meetOf = i => i.meetAt ? { place: i.meetAt, time: i.meetTime || i.time, lat: i.meetLat, lon: i.meetLon }
+  : i.place ? { place: i.place, time: i.time, lat: i.lat, lon: i.lon } : null;
+function renderNext() {
+  const nx = upcoming(inMyPlan), today = todayISO();
+  const when = i => `${i.date === today ? 'Hoje' : fmtDate(i.date)}${i.time ? ' às ' + esc(i.time) : tlabel(i) ? ' · ' + esc(tlabel(i)) : ''}`;
+  $('#now-next').innerHTML = nx ? `<h3>${esc(nx.title)}</h3><p class="muted">${when(nx)}</p>` : '<h3>A definir</h3>';
+  const m = nx && meetOf(nx);
+  $('#now-meet').innerHTML = !nx ? '<h3>A definir</h3>'
+    : m ? `<h3>${esc(m.place)}</h3><p class="muted">Para: ${esc(nx.title)}${m.time ? ' · às ' + esc(m.time) : ''}</p><div class="row"><a class="btn primary" target="_blank" rel="noopener" href="${dir(m)}">Como chegar</a></div>`
+    : `<h3>A definir</h3><p class="muted">Para: ${esc(nx.title)}. O local aparece aqui assim que for confirmado.</p>`;
+  const day = flat().filter(i => i.date === today && inMyPlan(i)), card = $('#myday-card');
+  if (card) card.hidden = !day.length;
+  if (!day.length) return;
+  const left = flat().filter(i => i.date === today && i.type === 'optional' && !goingMap()[itemKey(i, i)]).length;
+  $('#myday').innerHTML = day.map(i => { const q = meetOf(i); return `<div class="act t-${esc(i.type)}"><span class="time">${esc(tlabel(i))}</span><div><h4>${esc(i.title)}</h4><p class="meta">📍 ${q ? esc(q.place) + (q.time ? ' · ' + esc(q.time) : '') : 'Ponto de encontro a definir'}</p></div></div>`; }).join('')
+    + (left ? `<p class="note" style="margin-top:.8rem">Tens ${left} ${left === 1 ? 'atividade opcional' : 'atividades opcionais'} por escolher hoje.</p><div class="row"><button type="button" class="btn" data-page="programa">Escolher no Programa</button></div>` : '');
+}
 
-  </main>
+/* ===== Localização (o Google Maps trata disto) ===== */
+function renderLoc() {
+  $('#loc').innerHTML = `<p class="note">Vê onde estás e encontra o caminho no Google Maps.</p>
+    <div class="row"><a class="btn primary" target="_blank" rel="noopener" href="https://www.google.com/maps">Abrir no Maps</a></div>`;
+}
 
-  <footer>
-    <p>Innovation Tour 27</p>
-    <span>Explore the world. Create memories.</span>
-  </footer>
+/* ===== Tempo (Open-Meteo, sem chave) ===== */
+const WMO = c => c === 0 ? ['☀️', 'Céu limpo'] : c <= 2 ? ['🌤️', 'Pouco nublado'] : c === 3 ? ['☁️', 'Nublado'] : c <= 48 ? ['🌫️', 'Nevoeiro'] :
+  c <= 57 ? ['🌦️', 'Chuvisco'] : c <= 67 ? ['🌧️', 'Chuva'] : c <= 77 ? ['❄️', 'Neve'] : c <= 82 ? ['🌦️', 'Aguaceiros'] : c <= 86 ? ['🌨️', 'Neve'] : ['⛈️', 'Trovoada'];
+async function loadWeather(lat, lon, label) {
+  const w = state.w;
+  if (w && Date.now() - w.t < 9e5 && dist(lat, lon, w.lat, w.lon) < 3) { w.label = label; return renderWeather(); }
+  try {
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat.toFixed(3)}&longitude=${lon.toFixed(3)}&current=temperature_2m,apparent_temperature,weather_code,wind_speed_10m&timezone=auto`);
+    if (!r.ok) throw 0;
+    state.w = { t: Date.now(), lat, lon, label, c: (await r.json()).current }; store.set('w', state.w);
+  } catch (e) {}
+  renderWeather();
+}
+function renderWeather() {
+  const w = state.w, box = $('#weather'), card = box.closest ? box.closest('.card') : null;
+  if (card) card.hidden = !w;
+  if (!w) return;
+  const c = w.c, e = WMO(c.weather_code), mins = Math.round((Date.now() - w.t) / 6e4);
+  box.innerHTML = `<div class="wx"><span class="em">${e[0]}</span><div><b>${Math.round(c.temperature_2m)} °C</b> <span class="muted">(${Math.round(c.temperature_2m * 9 / 5 + 32)} °F)</span>
+    <p>${e[1]} · sensação ${Math.round(c.apparent_temperature)} °C · vento ${Math.round(c.wind_speed_10m)} km/h</p></div></div>
+    <p class="note">${esc(w.label || '')}${mins > 20 ? ' · há ' + mins + ' min' : ''}</p>`;
+}
+function weatherForCity() { const c = currentCity(), b = c || TRIP.cities[0]; loadWeather(b.lat, b.lon, c ? c.name : b.name + ' (cidade inicial)'); }
+function tick() { $('#clock').innerHTML = `<b>${hhmm(TZ)}</b> EUA<br>${hhmm('Europe/Lisbon')} Portugal`; }
 
-  <nav class="navigation" aria-label="Secções">
-    <button class="nav-btn active" data-page="hoje"><span class="ico">📍</span>Hoje</button>
-    <button class="nav-btn" data-page="programa"><span class="ico">🗓️</span>Programa</button>
-    <button class="nav-btn" data-page="mapas"><span class="ico">🗺️</span>Mapas</button>
-    <button class="nav-btn" data-page="informacoes"><span class="ico">ℹ️</span>Info</button>
-    <button class="nav-btn" data-page="avisos"><span class="ico">🔔</span>Avisos<span class="badge" id="nav-badge" hidden></span></button>
-  </nav>
+/* ===== Programa ===== */
+const TYPES = { mandatory: 'Obrigatória', optional: 'Opcional', free: 'Tempo livre', travel: 'Viagem' };
+// A chave usa o 'id' fixo da atividade; sem id, recorre a data + hora + título.
+const itemKey = (d, i) => i.id || `${d.date}|${i.time || i.period || ''}|${i.title}`;
+const shortD = d => new Date(d + 'T12:00:00').toLocaleDateString('pt-PT', { weekday: 'short', day: 'numeric', month: 'short' });
+function picks() {
+  const g = store.get('going', {});
+  return TRIP.days.flatMap(d => (d.items || []).filter(i => i.type === 'optional' && g[itemKey(d, i)]).map(i => ({ d, i })));
+}
+function pickText() {
+  const n = store.get('name', '').trim();
+  return `Innovation Tour 27 — opcionais de ${n || '(sem nome)'}:\n` + picks().map(({ d, i }) => `• ${shortD(d.date)}, ${tlabel(i) || 'dia'}: ${i.title}`).join('\n');
+}
+function renderMine() {
+  const P = picks(), box = $('#mine'); if (!box) return;
+  const o = TRIP.organizer || {};
+  box.innerHTML = `<div class="card mine"><span class="lbl">As minhas opcionais</span>
+    ${P.length ? `<p><b>${P.length}</b> ${P.length === 1 ? 'atividade escolhida' : 'atividades escolhidas'}</p><ul class="picks">${P.map(({ d, i }) => `<li>${shortD(d.date)} · ${esc(i.title)}</li>`).join('')}</ul>`
+      : '<p class="note">Marca "Tenho interesse" nas atividades opcionais e envia a lista ao organizador.</p>'}
+    <input id="name" class="inp" type="text" placeholder="O teu nome" autocomplete="name" value="${esc(store.get('name', ''))}">
+    <div class="row"><button type="button" class="btn primary" data-act="send" ${P.length ? '' : 'disabled'}>Enviar ao organizador</button>
+    ${o.whatsapp && P.length ? '<button type="button" class="btn" data-act="wa">WhatsApp</button>' : ''}
+    ${o.email && P.length ? '<button type="button" class="btn" data-act="mail">Email</button>' : ''}</div>
+    <p class="note" style="margin-top:.7rem">Só é enviado quando tocares num destes botões.</p></div>`;
+}
+function needName() {
+  if (store.get('name', '').trim()) return false;
+  toast('Escreve primeiro o teu nome'); const n = $('#name'); if (n) n.focus(); return true;
+}
+async function sendPicks() {
+  if (needName()) return;
+  const name = store.get('name', '').trim(), text = pickText();
+  if (TRIP.submitUrl) {
+    try {
+      await fetch(TRIP.submitUrl, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ name, picks: picks().map(({ d, i }) => ({ date: d.date, time: tlabel(i), title: i.title })) }) });
+      // Com 'no-cors' não é possível confirmar a receção, por isso o aviso é prudente.
+      toast('Pedido enviado. Confirma com o organizador que chegou.');
+    } catch (e) { toast('Sem ligação. Tenta outra vez.'); }
+    return;
+  }
+  if (navigator.share) { try { await navigator.share({ title: 'Innovation Tour 27', text }); } catch (e) {} return; }
+  try { await navigator.clipboard.writeText(text); toast('Lista copiada. Cola-a numa mensagem ao organizador.'); } catch (e) { prompt('Copia a lista:', text); }
+}
+function sendWA() { if (needName()) return; window.open(`https://wa.me/${String(TRIP.organizer.whatsapp).replace(/\D/g, '')}?text=${encodeURIComponent(pickText())}`, '_blank'); }
+function sendMail() { if (needName()) return; location.href = `mailto:${TRIP.organizer.email}?subject=${encodeURIComponent('Innovation Tour 27 — opcionais')}&body=${encodeURIComponent(pickText())}`; }
 
-  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+function renderProgram() {
+  $('#prog-filters').innerHTML = [['all', 'Todas'], ['mandatory', 'Obrigatórias'], ['optional', 'Opcionais'], ['free', 'Tempo livre']]
+    .map(([k, l]) => `<button type="button" class="chip" data-filter="${k}" aria-pressed="${state.filter === k}">${l}</button>`).join('');
+  const list = $('#prog-list'), going = store.get('going', {}), today = todayISO();
+  if (!TRIP.days.length) { list.innerHTML = TRIP.cities.map(c => `<div class="card"><h3>${esc(c.name)}</h3><p class="muted">Programa e atividades a confirmar.</p></div>`).join(''); return; }
+  const note = TRIP.programNote ? `<div class="card"><span class="tag mandatory">Programa provisório</span><p>${esc(TRIP.programNote)}</p></div>` : '';
+  const hasToday = TRIP.days.some(d => d.date === today);
+  const cards = TRIP.days.map((d, di) => {
+    const its = (d.items || []).filter(i => state.filter === 'all' || i.type === state.filter);
+    if (!its.length) return '';
+    const c = TRIP.cities.find(x => x.id === d.city), dt = new Date(d.date + 'T12:00:00');
+    const isToday = d.date === today, open = state.filter !== 'all' || isToday || (!hasToday && di === 0);
+    const items = its.map(i => `<div class="act t-${esc(i.type)}"><span class="time">${esc(tlabel(i))}</span><div><span class="tag ${esc(i.type)}">${TYPES[i.type] || ''}</span><h4>${esc(i.title)}</h4>
+          ${i.place ? `<p class="meta"><a target="_blank" rel="noopener" href="${i.lat != null ? pin(i.lat, i.lon) : txt(i.place)}">Ver no mapa</a></p>` : ''}
+          ${i.note ? `<p class="meta">${esc(i.note)}</p>` : ''}
+          ${i.type !== 'free' ? `<p class="meta">📍 ${meetOf(i) ? esc(meetOf(i).place) + (meetOf(i).time ? ' · ' + esc(meetOf(i).time) : '') : 'Ponto de encontro a definir'}</p>` : ''}
+          ${i.type === 'optional' ? `<label class="going"><input type="checkbox" data-going="${esc(itemKey(d, i))}" ${going[itemKey(d, i)] ? 'checked' : ''}> Tenho interesse</label>` : ''}</div></div>`).join('');
+    return `<div class="acc${open ? ' open' : ''}"><button type="button" class="ah" data-acc aria-expanded="${open}">
+      <span class="dt${isToday ? ' today' : ''}"><b>${dt.getDate()}</b><span>${dt.toLocaleDateString('pt-PT', { month: 'short' }).replace('.', '')}</span></span>
+      <span><span class="ht">${esc(d.title || (c && c.name) || '')}</span><span class="hs">${dt.toLocaleDateString('pt-PT', { weekday: 'long' })}${isToday ? ' · hoje' : ''}</span></span></button>
+      <div class="accb"><div><div class="accb-in">${d.note ? `<p class="note">${esc(d.note)}</p>` : ''}${items}${d.stay && state.filter === 'all' ? `<p class="stay">🏨 ${esc(d.stay)}</p>` : ''}</div></div></div></div>`;
+  }).join('');
+  list.innerHTML = note + (cards || '<p class="muted">Nenhuma atividade neste filtro.</p>');
+}
 
-  <script src="script.js"></script>
+/* ===== Mapas: botão para o Google Maps ===== */
+function renderMaps() {
+  const c = currentCity() || TRIP.cities[0];
+  $('#maps-go').innerHTML = `<a class="btn primary big" target="_blank" rel="noopener" href="https://www.google.com/maps/@${c.lat.toFixed(5)},${c.lon.toFixed(5)},13z">Abrir o Google Maps</a>
+    <p class="note" style="margin-top:.8rem">Abre centrado em ${esc(c.name)}.</p>`;
+}
+
+/* ===== Janelas iluminadas (cidade atual) ===== */
+const BLD = {
+  ny: [[10, 74, 18, 46], [30, 54, 20, 66], [54, 48, 20, 72], [76, 66, 18, 54], [96, 82, 16, 38]],
+  phl: [[132, 88, 8, 32], [142, 86, 64, 34], [164, 58, 20, 28], [208, 78, 14, 42]],
+  dc: [[278, 98, 72, 22], [284, 88, 60, 10], [298, 74, 32, 14]]
+};
+function buildWindows() {
+  const NS = 'http://www.w3.org/2000/svg';
+  Object.keys(BLD).forEach(id => {
+    const g = $('#sky-' + id); if (!g || g.querySelector('.win')) return;
+    const w = document.createElementNS(NS, 'g'); w.setAttribute('class', 'win');
+    BLD[id].forEach(([x, y, bw, bh]) => {
+      const cols = Math.floor((bw - 3) / 5), rows = Math.floor((bh - 3) / 7);
+      for (let c = 0; c < cols; c++) for (let r = 0; r < rows; r++) {
+        const h = (x * 31 + y * 17 + c * 7 + r * 13) % 10; if (h > 6) continue;
+        const e = document.createElementNS(NS, 'rect');
+        e.setAttribute('x', x + 3 + c * 5); e.setAttribute('y', y + 3 + r * 7);
+        e.setAttribute('width', 2.4); e.setAttribute('height', 3.4);
+        e.setAttribute('style', `--d:${((x + c * 3 + r * 5) % 17) / 10}s`);
+        if (h % 3 === 0) e.setAttribute('class', 'f');
+        w.appendChild(e);
+      }
+    });
+    g.appendChild(w);
+  });
+}
+
+/* ===== Informações ===== */
+const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+const rowsHTML = rows => (rows || []).map(r => `<div class="irow"><span class="k">${esc(r.k)}</span><div><h4>${esc(r.t)}</h4>${r.n ? `<p>${esc(r.n)}</p>` : ''}</div></div>`).join('');
+function infoSections() {
+  const S = TRIP.info.map(x => {
+    let rows = x.rows || [];
+    if (x.id === 'alojamento') rows = rows.concat(TRIP.cities.filter(c => c.hotel).map(c => ({ k: c.name, t: c.hotel.name, n: c.hotel.address || '' })));
+    return { id: x.id, ic: x.icon, t: x.title, sub: x.sub || '', html: rowsHTML(rows) };
+  });
+  S.push({ id: 'contactos', ic: '📞', t: 'Contactos', sub: 'Quem chamar se precisares de ajuda.',
+    html: TRIP.contacts.map(c => `<div class="irow" style="--c:var(--danger)"><span class="k">Ligar</span><div><h4>${esc(c.name)}</h4><p>${esc(c.role)}</p><a class="btn" href="tel:${esc(c.phone.replace(/\s/g, ''))}">${esc(c.phone)}</a></div></div>`).join('') });
+  S.push({ id: 'faq', ic: '❓', t: 'Perguntas', sub: `${TRIP.faq.length} respostas rápidas.`,
+    html: '<input id="faq-q" class="inp" type="search" placeholder="Procurar nas perguntas…" autocomplete="off"><div id="faq-items"></div>' });
+  return S;
+}
+function renderFaq(q) {
+  const n = norm((q || '').trim()), L = TRIP.faq.filter(f => !n || norm(f.q + ' ' + f.a).includes(n));
+  $('#faq-items').innerHTML = L.length
+    ? L.map(f => `<div class="qa"><button type="button" class="q" data-qa aria-expanded="false"><span>${esc(f.q)}</span><i></i></button><div class="a"><div><p>${esc(f.a)}</p></div></div></div>`).join('')
+    : '<p class="note" style="margin-top:1rem">Nenhuma pergunta encontrada.</p>';
+}
+function renderInfo() {
+  $('#info-list').innerHTML = infoSections().map((s, i) => `<div class="acc${i === 0 ? ' open' : ''}"><button type="button" class="ah" data-acc aria-expanded="${i === 0}">
+    <span class="dt"><b>${s.ic}</b></span><span><span class="ht">${esc(s.t)}</span><span class="hs">${esc(s.sub)}</span></span></button>
+    <div class="accb"><div><div class="accb-in">${s.html}</div></div></div></div>`).join('');
+  renderFaq('');
+}
+
+/* ===== Avisos ===== */
+const seen = () => store.get('seen', []);
+const NL = { urgent: 'Urgente', important: 'Importante', info: 'Informação' };
+const noticeHTML = (n, nw) => `<div class="card"><span class="tag ${n.type === 'urgent' ? 'urgent' : n.type === 'important' ? 'mandatory' : ''}">${NL[n.type] || 'Informação'}</span>${nw ? ' <span class="tag new">Novo</span>' : ''}<h3 style="margin-top:.4rem">${esc(n.title)}</h3><p>${esc(n.text)}</p></div>`;
+function renderNotices() {
+  const s = seen(), N = TRIP.notices, urg = N.filter(n => n.type !== 'info').slice(0, 2);
+  $('#notice-list').innerHTML = N.length ? N.map(n => noticeHTML(n, !s.includes(n.id))).join('') : '<p class="muted">Sem avisos por agora.</p>';
+  $('#now-notices').innerHTML = urg.length ? urg.map(n => noticeHTML(n, false)).join('') : '<div class="card"><span class="lbl">Avisos importantes</span><p class="muted">Sem avisos urgentes.</p></div>';
+  updateBadge();
+}
+function updateBadge() { const n = TRIP.notices.filter(x => !seen().includes(x.id)).length, b = $('#nav-badge'); b.hidden = !n; b.textContent = n; }
+function markRead() { store.set('seen', TRIP.notices.map(n => n.id)); updateBadge(); }
+
+/* ===== Eventos (ligados primeiro, para a navegação funcionar sempre) ===== */
+const safe = (...fns) => fns.forEach(f => { try { f(); } catch (e) { console.error(f.name, e); } });
+document.addEventListener('click', e => {
+  const t = e.target.closest ? e.target : e.target.parentElement; if (!t) return;
+  let el;
+  if ((el = t.closest('[data-page]'))) return show(el.dataset.page);
+  if ((el = t.closest('[data-filter]'))) { state.filter = el.dataset.filter; store.set('filter', state.filter); return renderProgram(); }
+  if ((el = t.closest('[data-acc]'))) { const a = el.closest('.acc'), o = a.classList.toggle('open'); return el.setAttribute('aria-expanded', o); }
+  if ((el = t.closest('[data-qa]'))) { const o = el.closest('.qa').classList.toggle('open'); return el.setAttribute('aria-expanded', o); }
+  if ((el = t.closest('[data-act]'))) { const a = el.dataset.act; if (a === 'send') sendPicks(); else if (a === 'wa') sendWA(); else if (a === 'mail') sendMail(); }
+});
+document.addEventListener('change', e => {
+  const g = e.target.dataset && e.target.dataset.going; if (!g) return;
+  const o = store.get('going', {}); o[g] = e.target.checked; store.set('going', o); renderMine(); safe(renderNext);
+});
+document.addEventListener('input', e => { if (e.target.id === 'name') store.set('name', e.target.value); else if (e.target.id === 'faq-q') renderFaq(e.target.value); });
+window.addEventListener('hashchange', () => show(location.hash.slice(1), false));
+const setOffline = () => { $('#offline').hidden = navigator.onLine; };
+window.addEventListener('online', () => { setOffline(); weatherForCity(); });
+window.addEventListener('offline', setOffline);
+
+/* ===== Arranque ===== */
+safe(buildWindows, renderHero, renderNext, renderLoc, renderWeather, renderProgram, renderMine, renderMaps, renderInfo, renderNotices, tick, setOffline);
+// A cada 30 s atualiza relógio, próxima atividade e contagem de dias (muda à meia-noite de Nova Iorque)
+setInterval(() => safe(tick, renderHero, renderNext), 30000);
+show(location.hash.slice(1) || 'hoje', false);
+weatherForCity();
+
+/* ===== Funcionar sem ligação (service worker) ===== */
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () => { navigator.serviceWorker.register('sw.js').catch(e => console.warn('Service worker:', e)); });
+}
+</script>
 </body>
 </html>
