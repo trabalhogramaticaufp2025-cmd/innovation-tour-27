@@ -2,7 +2,7 @@
 /* Service worker do Innovation Tour 27
    Guarda a página em cache para funcionar sem ligação.
    Ao alterar o index.html, muda o número de VERSION para forçar a atualização. */
-const VERSION = 'it27-v1';
+const VERSION = 'it27-v3';
 const CORE = ['./', './index.html', './manifest.json', './icon-192.png', './icon-512.png', './apple-touch-icon.png'];
 
 self.addEventListener('install', e => {
@@ -45,3 +45,4 @@ self.addEventListener('fetch', e => {
     })
   );
 });
+  
