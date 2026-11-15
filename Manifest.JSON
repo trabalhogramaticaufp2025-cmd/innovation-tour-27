@@ -1,0 +1,16 @@
+{
+  "name": "Innovation Tour 27",
+  "short_name": "Innovation 27",
+  "description": "Programa, mapas e informações da viagem a Nova Iorque, Filadélfia e Washington.",
+  "lang": "pt-PT",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0b1426",
+  "theme_color": "#0b1426",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}
